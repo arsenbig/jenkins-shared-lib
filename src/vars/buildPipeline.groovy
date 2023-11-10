@@ -1,51 +1,61 @@
-// src/vars/buildPipeline.groovy
-
 def call() {
     pipeline {
-        agent any
-
+        agent {
+            docker {
+                label 'docker-agent'
+                image 'maven:3.6.3-jdk-11'
+            }
+        }
         stages {
             stage('Checkout') {
                 steps {
                     checkout scm
                 }
             }
-
             stage('Build') {
                 steps {
                     script {
-                        echo 'Building the Java application...'
-                        sh 'mvn clean package'
+                        buildJavaApp()
                     }
                 }
             }
-
             stage('Test') {
                 steps {
                     script {
-                        echo 'Running unit tests...'
-                        sh 'mvn test'
+                        testJavaApp()
                     }
                 }
             }
-
             stage('Publish Test Results') {
                 steps {
                     script {
-                        echo 'Publishing test results...'
-                        junit 'target/surefire-reports/*.xml'
+                        publishTestResults()
                     }
                 }
             }
-
             stage('Build Docker Image') {
                 steps {
                     script {
-                        echo 'Building Docker image...'
-                        sh 'docker build -t my-java-app .'
+                        buildDockerImage()
                     }
                 }
             }
         }
     }
+}
+
+def buildJavaApp() {
+    sh 'mvn clean install'
+}
+
+def testJavaApp() {
+    sh 'mvn test'
+}
+
+def publishTestResults() {
+    junit '**/target/surefire-reports/*.xml'
+}
+
+def buildDockerImage() {
+    sh 'docker build -t java-app .'
 }
