@@ -1,6 +1,10 @@
 // mySharedLibrary/vars/myPipeline.groovy
 
 class MyPipeline {
+    def call() {
+        return this
+    }
+
     def checkoutCode() {
         script {
             checkout scm
