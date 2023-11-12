@@ -33,38 +33,5 @@ def buildDockerImage() {
 def call() {
     echo 'Running CI/CD pipeline...'
 
-    // Stage: Checkout
-    stage('Checkout') {
-        steps {
-            checkoutCode()
-        }
-    }
-
-    // Stage: Build
-    stage('Build') {
-        steps {
-            buildJavaApp()
-        }
-    }
-
-    // Stage: Test
-    stage('Test') {
-        steps {
-            runTests()
-        }
-    }
-
-    // Stage: Publish Test Results
-    stage('Publish Test Results') {
-        steps {
-            publishTestResults()
-        }
-    }
-
-    // Stage: Build Docker Image
-    stage('Build Docker Image') {
-        steps {
-            buildDockerImage()
-        }
-    }
+    // Stages...
 }
