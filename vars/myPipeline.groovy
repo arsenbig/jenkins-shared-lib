@@ -1,37 +1,20 @@
-// vars/myPipeline.groovy
-
-def checkoutCode() {
-    script {
-        checkout scm
-    }
+// vars/JavaPipeline.groovy
+def callCheckout() {
+    checkout scm
 }
 
-def buildJavaApp() {
-    script {
-        sh 'mvn clean install'
-    }
+def callBuild() {
+    sh 'mvn clean package'
 }
 
-def runTests() {
-    script {
-        sh 'mvn test'
-    }
+def callTest() {
+    sh 'mvn test'
 }
 
-def publishTestResults() {
-    script {
-        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml'])
-    }
+def callPublishTestResults() {
+    junit 'target/surefire-reports/*.xml'
 }
 
-def buildDockerImage() {
-    script {
-        sh 'docker build -t my-java-app .'
-    }
-}
-
-def call() {
-    echo 'Running CI/CD pipeline...'
-
-    // Stages...
+def callBuildDockerImage() {
+    sh 'docker build -t my-java-app .'
 }
