@@ -1,5 +1,6 @@
-def call() {
+// mySharedLibrary/vars/myPipeline.groovy
 
+class MyPipeline {
     def checkoutCode() {
         script {
             checkout scm
@@ -29,6 +30,6 @@ def call() {
             sh 'docker build -t my-java-app .'
         }
     }
-
-    return this
 }
+
+return new MyPipeline()
