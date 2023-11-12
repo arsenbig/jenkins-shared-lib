@@ -1,29 +1,33 @@
-// mySharedLibrary/vars/myPipeline.groovy
-
 def call() {
 
     def checkoutCode() {
-        checkout scm
+        script {
+            checkout scm
+        }
     }
 
     def buildJavaApp() {
-        // Maven build the Java application
-        sh 'mvn clean install'
+        script {
+            sh 'mvn clean install'
+        }
     }
 
     def runTests() {
-        // Run unit tests
-        sh 'mvn test'
+        script {
+            sh 'mvn test'
+        }
     }
 
     def publishTestResults() {
-        // Publish test results
-        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml'])
+        script {
+            step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml'])
+        }
     }
 
     def buildDockerImage() {
-        // Build Docker image
-        sh 'docker build -t my-java-app .'
+        script {
+            sh 'docker build -t my-java-app .'
+        }
     }
 
     return this
