@@ -15,7 +15,6 @@ def callPublishTestResults() {
     script {
         def junitReports = "**/target/surefire-reports/TEST-*.xml"
 
-        def mavenHome = tool 'Maven'
         junit testResults: junitReports
         checks([ $class: 'JUnitChecksPublisher', testResults: junitReports ])
     }
