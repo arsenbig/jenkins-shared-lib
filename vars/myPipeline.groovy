@@ -33,9 +33,6 @@ def callCheckstyle() {
     script {
         def checkstyleReports = "**/checkstyle-result.xml"
 
-        // Remove existing Checkstyle action
-        currentBuild.rawBuild.getActions().removeAll { it instanceof io.jenkins.plugins.analysis.core.model.ResultAction && it.id == 'custom-checkstyle' }
-
         recordIssues(
             tools: [checkStyle(pattern: checkstyleReports, id: 'custom-checkstyle')],
             aggregatingResults: true
