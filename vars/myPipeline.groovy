@@ -4,7 +4,7 @@ def callCheckout() {
 }
 
 def callBuild() {
-    sh 'mvn clean package'
+    sh 'mvn clean install'
 }
 
 def callTest() {
