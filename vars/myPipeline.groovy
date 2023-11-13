@@ -1,4 +1,3 @@
-// vars/JavaPipeline.groovy
 def callCheckout() {
     checkout scm
 }
@@ -9,10 +8,17 @@ def callBuild() {
 
 def callTest() {
     sh 'mvn test'
+    callPublishTestResults()
 }
 
 def callPublishTestResults() {
-    junit 'target/surefire-reports/*.xml'
+    script {
+        def junitReports = "**/target/surefire-reports/TEST-*.xml"
+
+        def mavenHome = tool 'Maven'
+        junit testResults: junitReports
+        checks([ $class: 'JUnitChecksPublisher', testResults: junitReports ])
+    }
 }
 
 def callBuildDockerImage() {
