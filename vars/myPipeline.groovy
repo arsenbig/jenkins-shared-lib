@@ -33,6 +33,8 @@ def callCheckstyle() {
     script {
         def checkstyleReports = "**/checkstyle-result.xml"
 
+        deleteIssues([pattern: checkstyleReports, id: 'custom-checkstyle'])
+        
         recordIssues(
             tools: [checkStyle(pattern: checkstyleReports, id: 'custom-checkstyle')],
             aggregatingResults: true
