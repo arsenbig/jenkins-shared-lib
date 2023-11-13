@@ -20,11 +20,12 @@ def callPublishTestResults() {
         junit testResults: junitReports
 
         recordIssues(
-            tools: [checkStyle(pattern: checkstyleReports, id: 'custom-checkstyle')],
+            tools: [checkStyle(pattern: checkstyleReports, id: 'custom-checkstyle-test')],
             aggregatingResults: true
         )
 
-        recordIssues tools: [findBugs(pattern: '**/findbugs.xml')], aggregatingResults: true
+        recordIssues tools: [findBugs(pattern: '**/findbugs.xml', id: 'custom-findbugs-test')],
+            aggregatingResults: true
     }
 }
 
