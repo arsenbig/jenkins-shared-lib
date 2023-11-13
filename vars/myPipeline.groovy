@@ -27,5 +27,5 @@ def callPublishTestResults() {
 }
 
 def callBuildDockerImage() {
-    sh 'docker build -t my-java-app .'
+    sh 'podman build -t java-app .'
 }
