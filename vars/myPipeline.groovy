@@ -20,7 +20,7 @@ def callPublishTestResults() {
         junit testResults: junitReports
 
         recordIssues(
-            tools: [checkStyle(pattern: checkstyleReports)],
+            tools: [checkStyle(pattern: checkstyleReports, id: 'custom-checkstyle')],
             aggregatingResults: true
         )
 
@@ -33,7 +33,7 @@ def callCheckstyle() {
         def checkstyleReports = "**/checkstyle-result.xml"
 
         recordIssues(
-            tools: [checkStyle(pattern: checkstyleReports)],
+            tools: [checkStyle(pattern: checkstyleReports, id: 'custom-checkstyle')],
             aggregatingResults: true
         )
     }
