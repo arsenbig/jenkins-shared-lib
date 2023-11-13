@@ -14,10 +14,14 @@ def callTest() {
 def callPublishTestResults() {
     script {
         def junitReports = "**/target/surefire-reports/TEST-*.xml"
+        def checkstyleReports = "**/checkstyle-result.xml"
 
         junit testResults: junitReports
 
-        checkstyle pattern: '**/checkstyle-result.xml'
+        recordIssues(
+            tools: [checkStyle(pattern: checkstyleReports)],
+            aggregatingResults: true
+        )
 
         recordIssues tools: [findBugs(pattern: '**/findbugs.xml')], aggregatingResults: true
     }
