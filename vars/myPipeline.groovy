@@ -16,7 +16,7 @@ def callPublishTestResults() {
         def junitReports = "**/target/surefire-reports/TEST-*.xml"
 
         junit testResults: junitReports
-        checks([ $class: 'JUnitChecksPublisher', testResults: junitReports ])
+        recordIssues tools: [checkStyle(), findBugs()], aggregatingResults: true
     }
 }
 
