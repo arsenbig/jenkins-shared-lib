@@ -16,7 +16,10 @@ def callPublishTestResults() {
         def junitReports = "**/target/surefire-reports/TEST-*.xml"
 
         junit testResults: junitReports
-        recordIssues tools: [checkStyle(), findBugs()], aggregatingResults: true
+
+        checkstyle pattern: '**/checkstyle-result.xml'
+
+        recordIssues tools: [findBugs(pattern: '**/findbugs.xml')], aggregatingResults: true
     }
 }
 
