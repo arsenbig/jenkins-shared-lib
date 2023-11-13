@@ -8,7 +8,6 @@ def callBuild() {
 
 def callTest() {
     sh 'mvn test'
-    callPublishTestResults()
 }
 
 def callPublishTestResults() {
