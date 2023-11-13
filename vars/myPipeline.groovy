@@ -9,6 +9,7 @@ def callBuild() {
 def callTest() {
     sh 'mvn test'
     callPublishTestResults()
+    callCheckstyle()
 }
 
 def callPublishTestResults() {
@@ -24,6 +25,17 @@ def callPublishTestResults() {
         )
 
         recordIssues tools: [findBugs(pattern: '**/findbugs.xml')], aggregatingResults: true
+    }
+}
+
+def callCheckstyle() {
+    script {
+        def checkstyleReports = "**/checkstyle-result.xml"
+
+        recordIssues(
+            tools: [checkStyle(pattern: checkstyleReports)],
+            aggregatingResults: true
+        )
     }
 }
 
